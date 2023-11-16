@@ -145,17 +145,17 @@ table = Table.new(worksheet)
 # p table['Prva Kolona']
 #
 # # Sesti zadatak
-# # a
+# #
 # p table.prvaKolona
 #
-# # b
+# # a
 # p table.prvaKolona.avg
 # p table.prvaKolona.sum
 #
-# # c
-# p table.drugaKolona.rn256
+# # b
+# p table.indeks.ri15
 #
-# # d
+# # c
 # p table.trecaKolona.map { |x| x * 2 }
 # p table.drugaKolona.reduce { |x, y| x + y }
 # p table.prvaKolona.select { |x| x > 10 }
