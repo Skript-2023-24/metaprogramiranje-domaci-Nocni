@@ -32,9 +32,7 @@ class Column < Array
 
   def map(&block)
     result = []
-    (2..@worksheet.num_rows).each do |row|
-      result << block.call(@worksheet[row, @column].to_i)
-    end
+    (2..@worksheet.num_rows).each { |row| result << block.call(@worksheet[row, @column].to_i) }
     result
   end
 
@@ -48,9 +46,7 @@ class Column < Array
 
   def reduce(&block)
     result = 0
-    (2..@worksheet.num_rows).each do |row|
-      result = block.call(result, @worksheet[row, @column].to_i)
-    end
+    (2..@worksheet.num_rows).each { |row| result = block.call(result, @worksheet[row, @column].to_i) }
     result
   end
 end
@@ -64,32 +60,24 @@ class Table
   end
 
   # Treci zadatak
-  def each
-    (1..@worksheet.num_rows).each do |row|
-      (1..@worksheet.num_cols).each do |col|
-        yield @worksheet[row, col]
-      end
-    end
+  def each(&block)
+    @table.each(&block)
   end
 
   def to_s
-    puts @worksheet.rows
+    puts @worksheet.rows unless @worksheet.rows.nil?
   end
 
   # Drugi zadatak
   def row(row)
     @rows = []
-    (1..@worksheet.num_cols).each do |column|
-      @rows << @worksheet[row, column]
-    end
+    (1..@worksheet.num_cols).each { |column| @rows << @worksheet[row, column] }
     @rows
   end
 
   def column(column)
     @columns = Column.new(column, @worksheet)
-    (2..@worksheet.num_rows).each do |row|
-      @columns << @worksheet[row, column].to_i
-    end
+    (2..@worksheet.num_rows).each { |row| @columns << @worksheet[row, column].to_i }
     @columns
   end
 
@@ -122,40 +110,40 @@ end
 
 table = Table.new(worksheet)
 
-# # Prvi zadatak
-# p table.arr
+# Prvi zadatak
+p table.arr
+
+# Drugi zadatak
+p table.row(1)
+p table.row(2)
+
+# Treci zadatak
+table.each { |x| puts x }
+
+# Peti zadatak
+# a
+p table['Prva Kolona']
+
+# b
+p table['Prva Kolona'][1]
+
+# c
+table['Prva Kolona'][5] = 2125
+
+p table['Prva Kolona']
+
+# Sesti zadatak
 #
-# # Drugi zadatak
-# p table.row(1)
-# p table.row(2)
-#
-# # Treci zadatak
-# table.each { |x| puts x }
-#
-# # Peti zadatak
-# # a
-# p table['Prva Kolona']
-#
-# # b
-# p table['Prva Kolona'][1]
-#
-# # c
-# table['Prva Kolona'][5] = 2125
-#
-# p table['Prva Kolona']
-#
-# # Sesti zadatak
-# #
-# p table.prvaKolona
-#
-# # a
-# p table.prvaKolona.avg
-# p table.prvaKolona.sum
-#
-# # b
-# p table.indeks.ri15
-#
-# # c
-# p table.trecaKolona.map { |x| x * 2 }
-# p table.drugaKolona.reduce { |x, y| x + y }
-# p table.prvaKolona.select { |x| x > 10 }
+p table.prvaKolona
+
+# a
+p table.prvaKolona.avg
+p table.prvaKolona.sum
+
+# b
+p table.indeks.ri15
+
+# c
+p table.trecaKolona.map { |x| x * 2 }
+p table.drugaKolona.reduce { |x, y| x + y }
+p table.prvaKolona.select { |x| x > 10 }
